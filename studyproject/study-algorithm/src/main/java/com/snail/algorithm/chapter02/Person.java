@@ -1,4 +1,4 @@
-package com.snail.algorithm.chapter2;
+package com.snail.algorithm.chapter02;
 
 public interface Person {
 	public boolean equals(Person other);

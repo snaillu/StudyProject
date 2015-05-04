@@ -1,4 +1,4 @@
-package com.snail.algorithm.chapter3;
+package com.snail.algorithm.chapter03;
 
 public class CircularlyLinkedList<E> {
 	private static class Node<E>{

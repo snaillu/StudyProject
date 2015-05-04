@@ -1,4 +1,4 @@
-package com.snail.algorithm.chapter5;
+package com.snail.algorithm.chapter05;
 
 import java.io.File;
 

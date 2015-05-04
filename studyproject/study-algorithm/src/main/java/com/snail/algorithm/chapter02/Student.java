@@ -1,4 +1,4 @@
-package com.snail.algorithm.chapter2;
+package com.snail.algorithm.chapter02;
 
 public class Student implements Person {
 	String id;
