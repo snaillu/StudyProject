@@ -46,4 +46,5 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 	private class ValueIterable implements Iterable<V>{
 		public Iterator<V> iterator() {return new ValueIterator();}
 	}
+	public Iterable<V> values(){return new ValueIterable();}
 }
