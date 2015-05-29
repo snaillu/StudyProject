@@ -12,5 +12,7 @@
     <module>study-spring</module>
     <module>study-refacting</module>
     <module>study-designpattern</module>
+    <module>study-springrecips</module>
+    <module>study-hibernate</module>
   </modules>
 </project>

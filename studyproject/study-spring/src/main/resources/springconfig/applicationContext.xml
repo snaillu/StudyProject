@@ -15,181 +15,38 @@
           http://www.springframework.org/schema/aop
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-autowire="byName">
     
-    <context:annotation-config />
-    <context:component-scan base-package="com.snail.spring.ch04">
-    </context:component-scan>
-    
-    <bean id="injectSimple" class="com.snail.spring.ch04.InjectSimple">
-    	<property name="name">
-    		<value>Snail</value>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    	<property name="driverClassName">
+    		<value>${jdbc.driverClassName}</value>
     	</property>
-    	<property name="age">
-    		<value>27</value>
+    	<property name="url">
+    		<value>${jdbc.url}</value>
     	</property>
-    	<property name="height">
-    		<value>1.78</value>
+    	<property name="username">
+    		<value>${jdbc.username}</value>
     	</property>
-    	<property name="programmer">
-    		<value>true</value>
-    	</property>
-    	<property name="ageInSeconds">
-    		<value>1103732923</value>
+    	<property name="password">
+    		<value>${jdbc.password}</value>
     	</property>
     </bean>
     
-    <bean id="collectionInjection" class="com.snail.spring.ch04.CollectionInjection">
-    	<property name="map">
-    		<map>
-    			<entry key="someValue"><value>Hello World!</value></entry>
-    			<entry key="someBean"><ref local="injectSimple" /></entry>
-    		</map>
-    	</property>
-    	<property name="props">
+    <context:property-placeholder location="classpath:jdbc.properties" />
+	<aop:aspectj-autoproxy /> 
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource"></property>
+    	<property name="packagesToScan" value="com.snail.spring.ch09" />
+    	<property name="hibernateProperties">
     		<props>
-    			<prop key="firstName">Qu</prop>
-    			<prop key="secondName">Lu</prop>
+    			<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+    			<prop key="hibernate.max_fetch_depth">3</prop>
+    			<prop key="hibernate.jdbc.fetch_size">50</prop>
+    			<prop key="hibernate.jdbc.batch_size">10</prop>
+    			<prop key="hibernate.show_sql">true</prop>
     		</props>
     	</property>
-    	<property name="set">
-    		<set>
-    			<value>Hello Set.</value>
-    			<ref local="injectSimple" />
-    		</set>
-    	</property>
-    	<property name="list">
-    		<list>
-    			<value>Hello List.</value>
-    			<ref local="injectSimple" />
-    		</list>
-    	</property>
     </bean>
     
-    <bean id="helper" class="com.snail.spring.ch04.mi.MyHelper" scope="prototype" />
-    
-    <bean id="abstractLookupBean" class="com.snail.spring.ch04.mi.AbstractLookupDemoBean">
-    	<lookup-method name="getMyHelper" bean="helper" />
-    </bean>
-    
-    <bean id="standardLookupBean" class="com.snail.spring.ch04.mi.StandardLoopkuDemoBean">
-    	<property name="myHelper">
-    		<ref local="helper" />
-    	</property>
-    </bean>
-    
-    <bean id="nonSingleton" class="java.lang.String" scope="prototype">
-    	<constructor-arg>
-    		<value>Snail</value>
-    	</constructor-arg>
-    </bean>
-    
-    <bean id="foo" class="com.snail.spring.ch04.autowrie.Foo" />
-    <bean id="bar1" class="com.snail.spring.ch04.autowrie.Bar" />
-    <bean id="targetByName" autowire="byName" 
-    class="com.snail.spring.ch04.autowrie.Target" lazy-init="true"></bean>
-    <bean id="targetByType" autowire="byType" 
-    class="com.snail.spring.ch04.autowrie.Target" lazy-init="true"></bean>
-    <bean id="targetConstructor" autowire="constructor" 
-    class="com.snail.spring.ch04.autowrie.Target" lazy-init="true"></bean>
-    
-    
-    
-    <bean id="inheritParent" class="com.snail.spring.ch04.inheritance.SimpleBean">
-    	<property name="name">
-    		<value>Snail</value>
-    	</property>
-    	<property name="age">
-    		<value>27</value>
-    	</property>
-    </bean>
-    
-    <bean id="inheritChild" class="com.snail.spring.ch04.inheritance.SimpleBean" parent="inheritParent">
-   		<property name="age">
-   			<value>42</value>
-   		</property>
-    </bean>
-    
-    
-    
-   <!--  <bean id="simpleBean1" class="com.snail.spring.ch05.lifecycle.SimpleBean" init-method="init">
-    	<property name="name">
-    		<value>Snail</value>
-    	</property>
-    	<property name="age">
-    		<value>100</value>
-    	</property>
-    </bean>
-    
-    <bean id="simpleBean2" class="com.snail.spring.ch05.lifecycle.SimpleBean" init-method="init">
-		<property name="age">
-			<value>100</value>
-		</property>
-    </bean>
-    
-    <bean id="simpleBean3" class="com.snail.spring.ch05.lifecycle.SimpleBean" init-method="init">
-    	<property name="name">
-    		<value>Snail</value>
-    	</property>
-    </bean> -->
-    
-    <bean id="destructiveBean" class="com.snail.spring.ch05.lifecycle.DestructiveBean"
-    destroy-method="destroy">
-    	<property name="filePath">
-    		<value>D:\Temp\HelloWorld.java</value>
-    	</property>
-    </bean>
-    
-    <bean id="loggingBean" class="com.snail.spring.ch05.interaction.LoggingBean" />
-    
-    
-    <bean id="shaDigest" class="com.snail.spring.ch05.factory.MessageDigestFactoryBean">
-    	<property name="algorithmName">
-    		<value>SHA1</value>
-    	</property>
-    </bean>
-    
-    <bean id="defaultDigest" class="com.snail.spring.ch05.factory.MessageDigestFactoryBean">
-    </bean>
-    
-    <bean id="digester" class="com.snail.spring.ch05.factory.MessageDigester">
-    	<property name="digest1">
-    		<ref local="shaDigest"></ref>
-    	</property>
-    	<property name="digest2">
-    		<ref local="defaultDigest"></ref>
-    	</property>
-    </bean>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <!-- Setter Injection -->
-    <!-- <bean id="messageRenderer" class="com.snail.spring.ch04.StandardOutMessageRenderer">
-    	<property name="messageProvider">
-    		<ref bean="messageProvider" />
-    	</property>
-    </bean>
-    <bean id="messageProvider" class="com.snail.spring.ch04.HelloWorldMessageProvider"></bean> -->
-    
-    <!-- The up equals below -->
-   <!-- <bean id="messageRenderer" class="com.snail.spring.ch04.StandardOutMessageRenderer"
-    	p:messageProvider="messageProvider" /> -->
-    	
-    <!-- Constructor Injection -->
-    <!-- <bean id="messageProvider1" class="com.snail.spring.ch04.StandardOutMessageRenderer">
-    	<constructor-arg>
-    		<value>This is a configurable message.</value>
-    	</constructor-arg>
-    </bean> -->
 </beans>
