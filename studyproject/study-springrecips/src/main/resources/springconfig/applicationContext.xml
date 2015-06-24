@@ -6,9 +6,84 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-<context:component-scan base-package="com.snail.springrecips.user" />
+<bean name="sequenceGenerator" class="com.snail.springrecips.sequence1.SequenceGenerator">
+	<property name="prefix">
+		<value>30</value>
+	</property>
+	<property name="suffix">
+		<value>A</value>
+	</property>
+	<property name="initial">
+		<value>100000</value>
+	</property>
+</bean>
+
+<bean name="sequenceGeneratorCtu" class="com.snail.springrecips.sequence1.SequenceGenerator">
+	<constructor-arg value="30"></constructor-arg>
+	<constructor-arg value="A"></constructor-arg>
+	<constructor-arg value="100000"></constructor-arg>
+</bean>
+
+<bean id="aaa" class="com.snail.springrecips.shop1.Battery">
+	<property name="name" value="AAA" />
+	<property name="price" value="2.5" />
+	<property name="rechargeable" value="true" />
+</bean>
+
+<bean id="cdrm" class="com.snail.springrecips.shop1.Disc">
+	<property name="name" value="CD-RW" />
+	<property name="price" value="1.6" />
+	<property name="capacity" value="700" />
+</bean>
+
+<bean id="dvdrm" class="com.snail.springrecips.shop1.Disc">
+	<property name="name" value="DVD-RW" />
+	<property name="price" value="2.6" />
+	<property name="capacity" value="4500" />
+</bean>
+
+<bean id="shoppingCart" scope="prototype" class="com.snail.springrecips.shop1.ShoppingCart" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <context:component-scan base-package="com.snail.springrecips.user" />
 <aop:aspectj-autoproxy proxy-target-class="true" />
-<bean id="userService" class="com.snail.springrecips.user.service.UserService" />
+<bean id="userService" class="com.snail.springrecips.user.service.UserService" /> -->
 
 
 <!-- <aop:config>

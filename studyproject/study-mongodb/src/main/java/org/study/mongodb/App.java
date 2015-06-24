@@ -20,19 +20,21 @@ public class App
     {
         try {
 			Mongo mongo = new Mongo("127.0.0.1",27017);
-			DB db = mongo.getDB("helloworld_db");
-			DBCollection dbCollection = db.getCollection("helloworld");
-			BasicDBObject basicDBObject = new BasicDBObject();
-			basicDBObject.put("Luck number", new Random().nextInt(1000));
-			dbCollection.insert(basicDBObject);
+			DB db = mongo.getDB("test");
+			DBCollection dbCollection = db.getCollection("number");
+			
+			for(int i=0;i<1000;i++){
+				BasicDBObject basicDBObject = new BasicDBObject();
+				basicDBObject.put("foo", "bar");
+				basicDBObject.put("bar", i);
+				
+				
+				dbCollection.insert(basicDBObject);
+			}
+			
 			
 			System.out.println("MongoDB has stored the luck number!"+"  ");
 			
-			DBCollection collection = db.getCollection("helloworld");
-			DBCursor cursor = dbCollection.find();
-			while(cursor.hasNext()){
-				System.out.println(cursor.next());
-			}
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
