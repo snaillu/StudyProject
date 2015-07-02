@@ -1,0 +1,186 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+<context:component-scan base-package="com.snail.springrecips.sequence">
+	<context:include-filter type="regex" expression="com\.snail\.springrecips\.sequence..*Dao.*" />
+	<context:include-filter type="regex" expression="com\.snail\.springrecips\.sequence..*Service.*" />
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+</context:component-scan>
+
+<context:component-scan base-package="com.snail.springrecips.shop"></context:component-scan>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<bean name="sequenceGenerator" class="com.snail.springrecips.sequence1.SequenceGenerator">
+	<property name="prefix">
+		<value>30</value>
+	</property>
+	<property name="suffix">
+		<value>A</value>
+	</property>
+	<property name="initial">
+		<value>100000</value>
+	</property>
+</bean>
+
+<bean name="sequenceGeneratorCtu" class="com.snail.springrecips.sequence1.SequenceGenerator">
+	<constructor-arg value="30"></constructor-arg>
+	<constructor-arg value="A"></constructor-arg>
+	<constructor-arg value="100000"></constructor-arg>
+</bean>
+
+<!-- <bean id="aaa" class="com.snail.springrecips.shop1.Battery">
+	<property name="name" value="AAA" />
+	<property name="price" value="2.5" />
+	<property name="rechargeable" value="true" />
+</bean>
+
+<bean id="cdrm" class="com.snail.springrecips.shop1.Disc">
+	<property name="name" value="CD-RW" />
+	<property name="price" value="1.6" />
+	<property name="capacity" value="700" />
+</bean>
+
+<bean id="dvdrm" class="com.snail.springrecips.shop1.Disc">
+	<property name="name" value="DVD-RW" />
+	<property name="price" value="2.6" />
+	<property name="capacity" value="4500" />
+</bean>
+
+<bean id="shoppingCart" scope="prototype" class="com.snail.springrecips.shop1.ShoppingCart" />
+
+ -->
+<aop:config>
+	<aop:aspect id="loggingAspect" ref="calculatorLoggingAspect">
+	<aop:pointcut id="loggingOperation" expression="execution(* com.snail.springrecips.caculator1.ArithmeticCaculatorImpl..*(..))" />
+		<aop:before pointcut-ref="loggingOperation" method="logBefore" />
+		<aop:after pointcut-ref="loggingOperation" method="logAfter"/>
+		<aop:after-returning pointcut-ref="loggingOperation" returning="result" method="logAfterReturning" />
+		<aop:after-throwing pointcut-ref="loggingOperation" throwing="e" method="logAfterThrowing" />
+		<aop:around pointcut-ref="loggingOperation" method="logAround"/>
+	</aop:aspect>
+</aop:config>
+
+<bean id="calculatorLoggingAspect" class="com.snail.springrecips.caculator1.CalculatorLoggingAspect"></bean>
+<bean id="arithmeticCalculator" class="com.snail.springrecips.caculator1.ArithmeticCaculatorImpl" />
+<bean id="unitCalculator" class="com.snail.springrecips.caculator1.UnitCaculatorImpl" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <context:component-scan base-package="com.snail.springrecips.user" />
+<aop:aspectj-autoproxy proxy-target-class="true" />
+<bean id="userService" class="com.snail.springrecips.user.service.UserService" /> -->
+
+
+<!-- <aop:config>
+	
+	<aop:aspect id="loggingAspect" ref="calculatorLoggingAspect">
+		<aop:pointcut id="loggingOperation" expression="execution(* com.snail.springrecips.calculator.ArithmeticCalculatorImpl..*(..))" />
+		<aop:before pointcut-ref="loggingOperation" method="logBefore" />
+		<aop:after pointcut-ref="loggingOperation" method="logAfter" />
+		<aop:after-returning pointcut-ref="loggingOperation" method="logAfterReturning"/>
+		<aop:after-throwing pointcut-ref="loggingOperation" method="logAfterThrowing"/>
+		<aop:around pointcut-ref="loggingOperation" method="logAround" />
+	</aop:aspect>
+</aop:config>
+
+<bean id="calculatorLoggingAspect" class="com.snail.springrecips.calculator.CalculatorLoggingAspect" />
+<bean id="arithmeticCalculator" class="com.snail.springrecips.calculator.ArithmeticCalculatorImpl" />
+<bean id="unitCalculator" class="com.snail.springrecips.calculator.UnitCalculatorImpl" />
+
+ -->
+
+
+
+
+
+
+
+
+
+
+<!-- 	<bean name="sequenceGenerator" class="com.snail.springrecips.sequence.SequenceGenerator">
+		<property name="prefix"><value>30</value></property>
+		<property name="suffix"><value>A</value></property>
+		<property name="initial"><value>100000</value></property>
+	</bean>
+	
+	<bean id="aaa" class="com.snail.springrecips.shop.Battery">
+		<constructor-arg value="AAA" />
+		<constructor-arg value="2.5" />
+		<property name="rechargeable" value="true" />
+	</bean>
+	
+	<bean id="cdrw" class="com.snail.springrecips.shop.Disc">
+		<constructor-arg value="CD-RW" />
+		<constructor-arg value="1.5" />
+		<property name="capacity" value="700" />
+	</bean> -->
+	
+	<!-- <bean id="datePrefixGenerator" class="com.snail.springrecips.sequence.DatePrefixGenerator">
+		<property name="pattern" value="yyyyMMdd" />
+	</bean>
+	<bean id="sequenceGenerator" class="com.snail.springrecips.sequence.SequenceGenerator">
+		<property name="initial" value="100000" />
+		<property name="suffix" value="A" />
+		<property name="prefixGenerator">
+			<ref bean="datePrefixGenerator" />
+		</property>
+	</bean> -->
+</beans>
